@@ -128,6 +128,118 @@ describe('test/app/controller/graph.test.js', () => {
   });
 
 
+  describe('#update', async () => {
+    const initRecordId = '5cecfe6936531d07adf2c07c';
+    const initRecordData = {
+      _id: initRecordId,
+      name: '我是初始图表记录',
+      type: 'Bar',
+      apiUrl: 'https://www.yuque.com/xjchenhao',
+      attr: {
+        xField: 'xField',
+        yField: 'yField',
+      },
+      titleShowType: 1,
+    };
+
+    beforeEach(async () => {
+      await app.model.Graph.create(initRecordData);
+    });
+
+    afterEach(async () => {
+      await Promise.all([
+        app.model.Graph.deleteMany(),
+      ]);
+    });
+
+    it('should return -1', async () => {
+
+      const nonexistentId = '5cecfe6936531d07adf2c073';
+
+      const newData = {
+        id: nonexistentId,
+        name: '123',
+        apiUrl: 'https://www.yuque.com/xjchenhao',
+        type: 'Column',
+        attr: {},
+      };
+
+      await app
+        .httpRequest()
+        .post('/api/graph/update')
+        .send(newData)
+        .expect(200)
+        .expect({
+          code: '-1',
+          msg: '不存在的图表id',
+          data: {},
+        });
+
+    });
+
+    it('should return -2', async () => {
+      const newDataId = '5cecfe6936531d07adf21073';
+
+      const newData = {
+        _id: newDataId,
+        name: '我是新的记录',
+        apiUrl: 'https://www.yuque.com/xjchenhao',
+        type: 'Column',
+        attr: {},
+      };
+
+      await app.model.Graph.create(newData);
+
+      // 这里就修改了跟初始记录冲突的name
+      await app
+        .httpRequest()
+        .post('/api/graph/update')
+        .send({
+          id: newDataId,
+          name: initRecordData.name,
+          apiUrl: 'https://www.yuque.com/xjchenhao',
+          type: 'Column',
+          attr: {},
+        })
+        .expect(200)
+        .expect({
+          code: '-2',
+          msg: '该图表名称已存在',
+          data: {},
+        });
+
+    });
+
+    it('should return 0', async () => {
+      const newData = {
+        id: initRecordId,
+        name: '我是新的图表',
+        apiUrl: 'https://www.yuque.com/xjchenhao',
+        type: 'Column',
+        attr: {},
+      };
+
+      await app
+        .httpRequest()
+        .post('/api/graph/update')
+        .send(newData)
+        .expect(200)
+        .expect({
+          code: '0',
+          msg: 'OK',
+          data: {},
+        });
+
+      const dbResult = await app.model.Graph.findOne().sort({ createTime: -1 });
+
+      assert.equal(dbResult.name, newData.name);
+      assert.equal(dbResult.apiUrl, newData.apiUrl);
+      assert.equal(dbResult.type, newData.type);
+      assert.equal(JSON.stringify(dbResult.attr), JSON.stringify(newData.attr));
+    });
+
+  });
+
   describe('#delete', async () => {
     const initRecordId = '5cecfe6936531d07adf2c07c';
     const initRecordData = {

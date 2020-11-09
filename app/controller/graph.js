@@ -70,6 +70,75 @@ class GraphController extends Controller {
     this.success({});
   }
 
+  // 添加
+  async update() {
+    const { ctx } = this;
+    const {
+      id,
+      type,
+      name,
+      apiUrl,
+      attr,
+      titleShowType,
+    } = ctx.request.body;
+
+    const createRule = {
+      id: 'string',
+      type: [ 'Bar', 'Column' ],
+      name: 'string',
+      apiUrl: 'string',
+      attr: 'object',
+    };
+
+    try {
+      ctx.validate(createRule);
+    } catch (err) {
+      this.validateError(err);
+      return;
+    }
+
+    const [ isRecordExist, isNameExist ] = await Promise.all([
+      ctx.model.Graph.exists({ _id: id }),
+      ctx.model.Graph.exists({
+        _id: {
+          $ne: id,
+        },
+        name }),
+    ]);
+
+    if (!isRecordExist) {
+      this.failure({
+        code: '-1',
+        msg: '不存在的图表id',
+        data: {},
+      });
+
+      return;
+    }
+
+    if (isNameExist) {
+      this.failure({
+        code: '-2',
+        msg: '该图表名称已存在',
+        data: {},
+      });
+
+      return;
+    }
+
+    const result = await ctx.model.Graph.findByIdAndUpdate(id, {
+      type,
+      name,
+      apiUrl,
+      attr,
+      titleShowType,
+    });
+
+    ctx.logger.error('修改图表记录结果：', result);
+
+    this.success({});
+  }
+
   // 删除
   async delete() {
     const { ctx } = this;

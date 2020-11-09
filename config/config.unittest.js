@@ -15,11 +15,19 @@ module.exports = appInfo => {
       },
     },
 
+    logger: {
+      level: 'ERROR',
+      consoleLevel: 'ERROR',
+      disableConsoleAfterReady: false,
+    },
+
     mongoose: {
       clients: {
         app: {
           url: 'mongodb://127.0.0.1:27017/biconfig',
-          options: {},
+          options: {
+            useFindAndModify: false, // 修复弃用警告。参考链接：https://mongoosejs.com/docs/deprecations.html#-findandmodify-
+          },
         },
       },
     },
