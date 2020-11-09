@@ -3,8 +3,8 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  name: { type: String, required: true }, // 名称
-  type: { type: String, enum: [ 'Bar' ], required: true }, // 类型
+  name: { type: String, required: true, unique: true }, // 名称
+  type: { type: String, enum: [ 'Bar', 'Column' ], required: true }, // 类型
   apiUrl: { type: String, required: true }, // api地址
   attr: { type: Object, required: true, default: {} }, // 具体配置
   titleShowType: { type: Number, default: 0, min: 0, max: 1 }, // 标题显示方式，0不显示，1显示名称

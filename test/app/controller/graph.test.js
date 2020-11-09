@@ -52,4 +52,77 @@ describe('test/app/controller/graph.test.js', () => {
     });
 
   });
+  describe('#create', async () => {
+    const initRecordId = '5cecfe6936531d07adf2c07c';
+    const initRecordData = {
+      _id: initRecordId,
+      name: '我是初始图表记录',
+      type: 'Bar',
+      apiUrl: 'https://www.yuque.com/xjchenhao',
+      attr: {
+        xField: 'xField',
+        yField: 'yField',
+      },
+      titleShowType: 1,
+    };
+
+    beforeEach(async () => {
+      await app.model.Graph.create(initRecordData);
+    });
+
+    afterEach(async () => {
+      await Promise.all([
+        app.model.Graph.deleteMany(),
+      ]);
+    });
+
+    it('should return -1', async () => {
+      const newData = {
+        name: initRecordData.name,
+        apiUrl: 'https://www.yuque.com/xjchenhao',
+        type: 'Column',
+        attr: {},
+      };
+
+      await app
+        .httpRequest()
+        .post('/api/graph/create')
+        .send(newData)
+        .expect(200)
+        .expect({
+          code: '-1',
+          msg: '该图表名称已存在',
+          data: {},
+        });
+
+    });
+
+    it('should return ok', async () => {
+      const newData = {
+        name: '我是新的图表',
+        apiUrl: 'https://www.yuque.com/xjchenhao',
+        type: 'Column',
+        attr: {},
+      };
+
+      await app
+        .httpRequest()
+        .post('/api/graph/create')
+        .send(newData)
+        .expect(200)
+        .expect({
+          code: '0',
+          msg: 'OK',
+          data: {},
+        });
+
+      const dbResult = await app.model.Graph.findOne().sort({ createTime: -1 });
+
+      assert.equal(dbResult.name, newData.name);
+      assert.equal(dbResult.apiUrl, newData.apiUrl);
+      assert.equal(dbResult.type, newData.type);
+      assert.equal(JSON.stringify(dbResult.attr), JSON.stringify(newData.attr));
+    });
+
+  });
 });

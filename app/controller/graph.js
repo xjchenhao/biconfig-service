@@ -19,6 +19,56 @@ class GraphController extends Controller {
       list: result,
     });
   }
+
+  // 添加
+  async create() {
+    const { ctx } = this;
+    const {
+      type,
+      name,
+      apiUrl,
+      attr,
+      titleShowType,
+    } = ctx.request.body;
+
+    const createRule = {
+      type: [ 'Bar', 'Column' ],
+      name: 'string',
+      apiUrl: 'string',
+      attr: 'object',
+    };
+
+    try {
+      ctx.validate(createRule);
+    } catch (err) {
+      this.validateError(err);
+      return;
+    }
+
+    const isNameExist = await ctx.model.Graph.exists({ name });
+
+    if (isNameExist) {
+      this.failure({
+        code: '-1',
+        msg: '该图表名称已存在',
+        data: {},
+      });
+
+      return;
+    }
+
+    const result = await ctx.model.Graph.create({
+      type,
+      name,
+      apiUrl,
+      attr,
+      titleShowType,
+    });
+
+    ctx.logger.debug('添加新图表记录结果：', result);
+
+    this.success({});
+  }
 }
 
 module.exports = GraphController;
