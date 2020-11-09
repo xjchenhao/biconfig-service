@@ -9,6 +9,11 @@ module.exports = appInfo => {
    * @type {Egg.EggAppConfig}
    **/
   const config = {
+    security: {
+      csrf: {
+        enable: false,
+      },
+    },
 
     mongoose: {
       clients: {
