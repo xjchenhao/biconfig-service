@@ -150,6 +150,16 @@ class GraphController extends Controller {
 
     this.success({});
   }
+
+  // 详情
+  async view() {
+    const { ctx } = this;
+    const { id } = ctx.query;
+
+    const result = await ctx.model.Graph.findById(id);
+
+    this.success(result);
+  }
 }
 
 module.exports = GraphController;

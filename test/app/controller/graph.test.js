@@ -1,6 +1,9 @@
 'use strict';
 
 const { app, assert } = require('egg-mock/bootstrap');
+const url = require('url');
+
+const { URLSearchParams } = url;
 
 describe('test/app/controller/graph.test.js', () => {
   describe('#list', async () => {
@@ -29,13 +32,14 @@ describe('test/app/controller/graph.test.js', () => {
 
     it('should return ok', async () => {
 
+      const query = {
+        name: initRecordData.name,
+        type: initRecordData.type,
+      };
+
       const { body: result } = await app
         .httpRequest()
-        .get('/api/graph/list')
-        .send({
-          name: initRecordData.name,
-          type: initRecordData.type,
-        })
+        .get(`/api/graph/list?${new URLSearchParams(query)}`)
         .expect(200);
 
       assert.equal(result.code, '0');
@@ -126,7 +130,6 @@ describe('test/app/controller/graph.test.js', () => {
     });
 
   });
-
 
   describe('#update', async () => {
     const initRecordId = '5cecfe6936531d07adf2c07c';
@@ -285,4 +288,55 @@ describe('test/app/controller/graph.test.js', () => {
     });
 
   });
+
+  describe('#view', async () => {
+    const initRecordId = '5cecfe6936531d07adf2c07c';
+    const initRecordData = {
+      _id: initRecordId,
+      name: '我是初始图表记录',
+      type: 'Bar',
+      apiUrl: 'https://www.yuque.com/xjchenhao',
+      attr: {
+        xField: 'xField',
+        yField: 'yField',
+      },
+      titleShowType: 1,
+    };
+
+    beforeEach(async () => {
+      await app.model.Graph.create(initRecordData);
+    });
+
+    afterEach(async () => {
+      await Promise.all([
+        app.model.Graph.deleteMany(),
+      ]);
+    });
+
+    it('should return ok', async () => {
+
+      const query = {
+        id: initRecordId,
+      };
+
+      const { body: result } = await app
+        .httpRequest()
+        .get(`/api/graph/view?${new URLSearchParams(query)}`)
+        .expect(200);
+
+      assert.equal(result.code, '0');
+      assert.equal(result.msg, 'OK');
+
+      assert.equal(result.data._id, initRecordData._id);
+      assert.equal(result.data.name, initRecordData.name);
+      assert.equal(result.data.type, initRecordData.type);
+      assert.equal(result.data.apiUrl, initRecordData.apiUrl);
+      assert.equal(result.data.attr.xField, initRecordData.attr.xField);
+      assert.equal(result.data.attr.yField, initRecordData.attr.yField);
+      assert.equal(result.data.titleShowType, initRecordData.titleShowType);
+    });
+
+  });
+
+
 });
