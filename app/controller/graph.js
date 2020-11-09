@@ -65,7 +65,19 @@ class GraphController extends Controller {
       titleShowType,
     });
 
-    ctx.logger.debug('添加新图表记录结果：', result);
+    ctx.logger.debug('添加图表记录结果：', result);
+
+    this.success({});
+  }
+
+  // 删除
+  async delete() {
+    const { ctx } = this;
+    const { id } = ctx.request.body;
+
+    const result = await ctx.model.Graph.findByIdAndDelete(id);
+
+    ctx.logger.debug('删除图表记录结果：\n', result);
 
     this.success({});
   }

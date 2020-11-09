@@ -52,6 +52,7 @@ describe('test/app/controller/graph.test.js', () => {
     });
 
   });
+
   describe('#create', async () => {
     const initRecordId = '5cecfe6936531d07adf2c07c';
     const initRecordData = {
@@ -122,6 +123,53 @@ describe('test/app/controller/graph.test.js', () => {
       assert.equal(dbResult.apiUrl, newData.apiUrl);
       assert.equal(dbResult.type, newData.type);
       assert.equal(JSON.stringify(dbResult.attr), JSON.stringify(newData.attr));
+    });
+
+  });
+
+
+  describe('#delete', async () => {
+    const initRecordId = '5cecfe6936531d07adf2c07c';
+    const initRecordData = {
+      _id: initRecordId,
+      name: '我是初始图表记录',
+      type: 'Bar',
+      apiUrl: 'https://www.yuque.com/xjchenhao',
+      attr: {
+        xField: 'xField',
+        yField: 'yField',
+      },
+      titleShowType: 1,
+    };
+
+    beforeEach(async () => {
+      await app.model.Graph.create(initRecordData);
+    });
+
+    afterEach(async () => {
+      await Promise.all([
+        app.model.Graph.deleteMany(),
+      ]);
+    });
+
+    it('should return ok', async () => {
+
+      await app
+        .httpRequest()
+        .post('/api/graph/delete')
+        .send({
+          id: initRecordData._id,
+        })
+        .expect(200)
+        .expect({
+          code: '0',
+          msg: 'OK',
+          data: {},
+        });
+
+      const dbResult = await app.model.Graph.find();
+
+      assert.equal(dbResult.length, 0);
     });
 
   });
