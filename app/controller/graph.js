@@ -67,7 +67,9 @@ class GraphController extends Controller {
 
     ctx.logger.debug('添加图表记录结果：', result);
 
-    this.success({});
+    this.success({
+      id: result.id,
+    });
   }
 
   // 添加
@@ -136,7 +138,7 @@ class GraphController extends Controller {
 
     ctx.logger.error('修改图表记录结果：', result);
 
-    this.success({});
+    this.success();
   }
 
   // 删除

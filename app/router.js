@@ -19,4 +19,5 @@ module.exports = app => {
   router.post('/api/graph/delete', controller.graph.delete); // 删除图表
   router.post('/api/graph/update', controller.graph.update); // 更新图表信息
   router.get('/api/graph/view', controller.graph.view); // 查看图表信息
+  router.get('/api/graph/detail', controller.graph.view); // 查看图表信息
 };

@@ -110,18 +110,17 @@ describe('test/app/controller/graph.test.js', () => {
         attr: {},
       };
 
-      await app
+      const { body: result } = await app
         .httpRequest()
         .post('/api/graph/create')
         .send(newData)
-        .expect(200)
-        .expect({
-          code: '0',
-          msg: 'OK',
-          data: {},
-        });
+        .expect(200);
 
       const dbResult = await app.model.Graph.findOne().sort({ createTime: -1 });
+
+      assert.equal(result.code, '0');
+      assert.equal(result.msg, 'OK');
+      assert.equal(result.data.id, dbResult._id);
 
       assert.equal(dbResult.name, newData.name);
       assert.equal(dbResult.apiUrl, newData.apiUrl);
