@@ -82,7 +82,7 @@ class BaseController extends Controller {
       msg: ctx.helper.errorCode['422'],
       data: error.errors,
     };
-    ctx.status = 200;
+    ctx.status = 422;
   }
 
 }
