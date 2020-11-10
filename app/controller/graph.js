@@ -29,6 +29,7 @@ class GraphController extends Controller {
       apiUrl,
       attr,
       titleShowType,
+      timeFilterShowType,
     } = ctx.request.body;
 
     const createRule = {
@@ -36,6 +37,16 @@ class GraphController extends Controller {
       name: 'string',
       apiUrl: 'string',
       attr: 'object',
+      titleShowType: {
+        type: 'number',
+        min: 0,
+        max: 1,
+      },
+      timeFilterShowType: {
+        type: 'number',
+        min: 0,
+        max: 1,
+      },
     };
 
     try {
@@ -63,6 +74,7 @@ class GraphController extends Controller {
       apiUrl,
       attr,
       titleShowType,
+      timeFilterShowType,
     });
 
     ctx.logger.debug('添加图表记录结果：', result);
@@ -82,6 +94,7 @@ class GraphController extends Controller {
       apiUrl,
       attr,
       titleShowType,
+      timeFilterShowType,
     } = ctx.request.body;
 
     const createRule = {
@@ -90,6 +103,16 @@ class GraphController extends Controller {
       name: 'string',
       apiUrl: 'string',
       attr: 'object',
+      titleShowType: {
+        type: 'number',
+        min: 0,
+        max: 1,
+      },
+      timeFilterShowType: {
+        type: 'number',
+        min: 0,
+        max: 1,
+      },
     };
 
     try {
@@ -134,6 +157,7 @@ class GraphController extends Controller {
       apiUrl,
       attr,
       titleShowType,
+      timeFilterShowType,
     });
 
     ctx.logger.error('修改图表记录结果：', result);

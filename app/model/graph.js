@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
   apiUrl: { type: String, required: true }, // api地址
   attr: { type: Object, required: true, default: {} }, // 具体配置
   titleShowType: { type: Number, default: 0, min: 0, max: 1 }, // 标题显示方式，0不显示，1显示名称
+  timeFilterShowType: { type: Number, default: 0, min: 0, max: 1 }, // 时间筛选组件显示方式，0不显示，1显示
 
   createTime: {
     type: Date,

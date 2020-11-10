@@ -18,6 +18,7 @@ describe('test/app/controller/graph.test.js', () => {
         yField: 'yField',
       },
       titleShowType: 1,
+      timeFilterShowType: 1,
     };
 
     beforeEach(async () => {
@@ -69,6 +70,7 @@ describe('test/app/controller/graph.test.js', () => {
         yField: 'yField',
       },
       titleShowType: 1,
+      timeFilterShowType: 1,
     };
 
     beforeEach(async () => {
@@ -87,6 +89,8 @@ describe('test/app/controller/graph.test.js', () => {
         apiUrl: 'https://www.yuque.com/xjchenhao',
         type: 'Column',
         attr: {},
+        titleShowType: 1,
+        timeFilterShowType: 1,
       };
 
       await app
@@ -108,6 +112,8 @@ describe('test/app/controller/graph.test.js', () => {
         apiUrl: 'https://www.yuque.com/xjchenhao',
         type: 'Column',
         attr: {},
+        titleShowType: 1,
+        timeFilterShowType: 1,
       };
 
       const { body: result } = await app
@@ -125,6 +131,8 @@ describe('test/app/controller/graph.test.js', () => {
       assert.equal(dbResult.name, newData.name);
       assert.equal(dbResult.apiUrl, newData.apiUrl);
       assert.equal(dbResult.type, newData.type);
+      assert.equal(dbResult.titleShowType, newData.titleShowType);
+      assert.equal(dbResult.timeFilterShowType, newData.timeFilterShowType);
       assert.equal(JSON.stringify(dbResult.attr), JSON.stringify(newData.attr));
     });
 
@@ -142,6 +150,7 @@ describe('test/app/controller/graph.test.js', () => {
         yField: 'yField',
       },
       titleShowType: 1,
+      timeFilterShowType: 1,
     };
 
     beforeEach(async () => {
@@ -164,6 +173,8 @@ describe('test/app/controller/graph.test.js', () => {
         apiUrl: 'https://www.yuque.com/xjchenhao',
         type: 'Column',
         attr: {},
+        titleShowType: 1,
+        timeFilterShowType: 1,
       };
 
       await app
@@ -202,6 +213,8 @@ describe('test/app/controller/graph.test.js', () => {
           apiUrl: 'https://www.yuque.com/xjchenhao',
           type: 'Column',
           attr: {},
+          titleShowType: 1,
+          timeFilterShowType: 1,
         })
         .expect(200)
         .expect({
@@ -219,6 +232,8 @@ describe('test/app/controller/graph.test.js', () => {
         apiUrl: 'https://www.yuque.com/xjchenhao',
         type: 'Column',
         attr: {},
+        titleShowType: 1,
+        timeFilterShowType: 1,
       };
 
       await app
@@ -237,6 +252,8 @@ describe('test/app/controller/graph.test.js', () => {
       assert.equal(dbResult.name, newData.name);
       assert.equal(dbResult.apiUrl, newData.apiUrl);
       assert.equal(dbResult.type, newData.type);
+      assert.equal(dbResult.titleShowType, newData.titleShowType);
+      assert.equal(dbResult.timeFilterShowType, newData.timeFilterShowType);
       assert.equal(JSON.stringify(dbResult.attr), JSON.stringify(newData.attr));
     });
 
@@ -254,6 +271,7 @@ describe('test/app/controller/graph.test.js', () => {
         yField: 'yField',
       },
       titleShowType: 1,
+      timeFilterShowType: 1,
     };
 
     beforeEach(async () => {
@@ -300,6 +318,7 @@ describe('test/app/controller/graph.test.js', () => {
         yField: 'yField',
       },
       titleShowType: 1,
+      timeFilterShowType: 1,
     };
 
     beforeEach(async () => {
@@ -333,6 +352,7 @@ describe('test/app/controller/graph.test.js', () => {
       assert.equal(result.data.attr.xField, initRecordData.attr.xField);
       assert.equal(result.data.attr.yField, initRecordData.attr.yField);
       assert.equal(result.data.titleShowType, initRecordData.titleShowType);
+      assert.equal(result.data.timeFilterShowType, initRecordData.timeFilterShowType);
     });
 
   });
