@@ -33,7 +33,7 @@ class GraphController extends Controller {
     } = ctx.request.body;
 
     const createRule = {
-      type: [ 'Bar', 'Column' ],
+      type: [ 'Bar', 'Column', 'Pie', 'Line' ],
       name: 'string',
       apiUrl: 'string',
       attr: 'object',
@@ -99,7 +99,7 @@ class GraphController extends Controller {
 
     const createRule = {
       id: 'string',
-      type: [ 'Bar', 'Column' ],
+      type: [ 'Bar', 'Column', 'Pie', 'Line' ],
       name: 'string',
       apiUrl: 'string',
       attr: 'object',
