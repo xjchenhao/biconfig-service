@@ -5,7 +5,7 @@ db.graphs.insert([
         "_id" : ObjectId("5d8ad6e2a9ed49004c33bd41"),
         "name" : "我是初始图表记录1",
         "type": "Bar",
-        "apiUrl": "https://www.yuque.com/xjchenhao",
+        "apiUrl": "/biconfigApi/demo/dataSource/column",
         "attr": {
             "xField": "xField",
             "yField": "yField",
@@ -18,7 +18,7 @@ db.graphs.insert([
         "_id" : ObjectId("5d8ad6e2a9ed49004c33bd42"),
         "name" : '我是初始图表记录2',
         "type": "Bar",
-        "apiUrl": "https://www.yuque.com/xjchenhao",
+        "apiUrl": "/biconfigApi/demo/dataSource/column",
         "attr": {
             "xField": "xField",
             "yField": "yField",
@@ -31,7 +31,7 @@ db.graphs.insert([
         "_id" : ObjectId("5d8ad6e2a9ed49004c33bd43"),
         "name" : '我是初始图表记录3',
         "type": "Bar",
-        "apiUrl": "https://www.yuque.com/xjchenhao",
+        "apiUrl": "/biconfigApi/demo/dataSource/column",
         "attr": {
             "xField": "xField",
             "yField": "yField",
