@@ -4,6 +4,7 @@ db.graphs.insert([
     {
         "_id" : ObjectId("5d8ad6e2a9ed49004c33bd41"),
         "name" : "我是初始图表记录1",
+        "uri" : "我是初始图表记录1的uri",
         "type": "Bar",
         "apiUrl": "/biconfigApi/demo/dataSource/column",
         "attr": {
@@ -17,6 +18,7 @@ db.graphs.insert([
     {
         "_id" : ObjectId("5d8ad6e2a9ed49004c33bd42"),
         "name" : '我是初始图表记录2',
+        "uri" : "我是初始图表记录2的uri",
         "type": "Bar",
         "apiUrl": "/biconfigApi/demo/dataSource/column",
         "attr": {
@@ -30,6 +32,7 @@ db.graphs.insert([
     {
         "_id" : ObjectId("5d8ad6e2a9ed49004c33bd43"),
         "name" : '我是初始图表记录3',
+        "uri" : "我是初始图表记录3的uri",
         "type": "Bar",
         "apiUrl": "/biconfigApi/demo/dataSource/column",
         "attr": {
