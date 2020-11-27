@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
   name: { type: String, required: true, unique: true }, // 名称
+  uri: { type: String, required: true, unique: true }, // 标识
   type: { type: String, enum: [ 'Bar', 'Column' ], required: true }, // 类型
   apiUrl: { type: String, required: true }, // api地址
   attr: { type: Object, required: true, default: {} }, // 具体配置

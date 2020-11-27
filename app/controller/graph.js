@@ -6,11 +6,12 @@ class GraphController extends Controller {
   // 列表
   async list() {
     const { ctx } = this;
-    const { name, type } = ctx.query;
+    const { name, type, uri } = ctx.query;
 
     const filteredQuery = ctx.helper.filterObjectEmptyValue({
       name,
       type,
+      uri,
     });
 
     const result = await ctx.model.Graph.find(filteredQuery);
@@ -30,12 +31,14 @@ class GraphController extends Controller {
       attr,
       titleShowType,
       timeFilterShowType,
+      uri,
     } = ctx.request.body;
 
     const createRule = {
       type: [ 'Bar', 'Column', 'Pie', 'Line' ],
       name: 'string',
       apiUrl: 'string',
+      uri: 'string',
       attr: 'object',
       titleShowType: {
         type: 'number',
@@ -56,7 +59,10 @@ class GraphController extends Controller {
       return;
     }
 
-    const isNameExist = await ctx.model.Graph.exists({ name });
+    const [ isNameExist, isUriExist ] = await Promise.all([
+      ctx.model.Graph.exists({ name }),
+      ctx.model.Graph.exists({ uri }),
+    ]);
 
     if (isNameExist) {
       this.failure({
@@ -68,9 +74,20 @@ class GraphController extends Controller {
       return;
     }
 
+    if (isUriExist) {
+      this.failure({
+        code: '-2',
+        msg: '重复的图表标识',
+        data: {},
+      });
+
+      return;
+    }
+
     const result = await ctx.model.Graph.create({
       type,
       name,
+      uri,
       apiUrl,
       attr,
       titleShowType,
@@ -90,6 +107,7 @@ class GraphController extends Controller {
     const {
       id,
       type,
+      uri,
       name,
       apiUrl,
       attr,
@@ -102,6 +120,7 @@ class GraphController extends Controller {
       type: [ 'Bar', 'Column', 'Pie', 'Line' ],
       name: 'string',
       apiUrl: 'string',
+      uri: 'string',
       attr: 'object',
       titleShowType: {
         type: 'number',
@@ -122,13 +141,18 @@ class GraphController extends Controller {
       return;
     }
 
-    const [ isRecordExist, isNameExist ] = await Promise.all([
+    const [ isRecordExist, isNameExist, isUriExist ] = await Promise.all([
       ctx.model.Graph.exists({ _id: id }),
       ctx.model.Graph.exists({
         _id: {
           $ne: id,
         },
         name }),
+      ctx.model.Graph.exists({
+        _id: {
+          $ne: id,
+        },
+        uri }),
     ]);
 
     if (!isRecordExist) {
@@ -151,9 +175,20 @@ class GraphController extends Controller {
       return;
     }
 
+    if (isUriExist) {
+      this.failure({
+        code: '-3',
+        msg: '重复的图表标识',
+        data: {},
+      });
+
+      return;
+    }
+
     const result = await ctx.model.Graph.findByIdAndUpdate(id, {
       type,
       name,
+      uri,
       apiUrl,
       attr,
       titleShowType,
@@ -180,9 +215,14 @@ class GraphController extends Controller {
   // 详情
   async view() {
     const { ctx } = this;
-    const { id } = ctx.query;
+    const { id, uri } = ctx.query;
 
-    const result = await ctx.model.Graph.findById(id);
+    const filteredQuery = ctx.helper.filterObjectEmptyValue({
+      _id: id,
+      uri,
+    });
+
+    const result = await ctx.model.Graph.findOne(filteredQuery);
 
     this.success(result);
   }
