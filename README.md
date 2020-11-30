@@ -31,3 +31,9 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+
+## 环境依赖
+1. 安装docker
+2. 在工程根目录下执行`docker-compose up`
+3. 执行`docker cp ./init.d/mongo/createGraphRecord.js biconfig-service_mongodb_1:/root && docker exec -it biconfig-service_mongodb_1 /bin/bash -c 'mongo --quiet 127.0.0.1:27017/biconfig /root/createGraphRecord.js'`
+4. 配置完成
