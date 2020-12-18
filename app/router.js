@@ -12,6 +12,7 @@ module.exports = app => {
   router.get('/api/demo/dataSource/line', controller.dataSource.line); // 折线图数据
   router.get('/api/demo/dataSource/bar', controller.dataSource.bar); // 条形图数据
   router.get('/api/demo/dataSource/pie', controller.dataSource.pie); // 饼状图数据
+  router.get('/api/demo/dataSource/test', controller.dataSource.test); // 饼状图数据
 
   /* 图表配置相关 */
   router.get('/api/graph/list', controller.graph.list); // 图表记录列表
