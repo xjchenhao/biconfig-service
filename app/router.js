@@ -21,4 +21,12 @@ module.exports = app => {
   router.post('/api/graph/update', controller.graph.update); // 更新图表信息
   router.get('/api/graph/view', controller.graph.view); // 查看图表信息
   router.get('/api/graph/detail', controller.graph.view); // 查看图表信息
+
+  /* 图表配置相关 */
+  router.get('/api/page/list', controller.page.list); // 页面记录列表
+  router.post('/api/page/create', controller.page.create); // 创建新的页面
+  router.post('/api/page/delete', controller.page.delete); // 删除页面
+  router.post('/api/page/update', controller.page.update); // 更新页面信息
+  router.get('/api/page/view', controller.page.view); // 查看页面信息
+  router.get('/api/page/detail', controller.page.view); // 查看页面信息
 };
