@@ -65,7 +65,7 @@ class PageController extends Controller {
     });
   }
 
-  // 添加
+  // 修改
   async update() {
     const { ctx } = this;
     const {
